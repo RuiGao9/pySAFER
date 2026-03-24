@@ -1,4 +1,5 @@
-# pySAFER
+# pySAFER: A Python Toolkit for the Simple Algorithm for actual Evapotranspiration Retrieving
+This repository :
 
 # How To Use This Repository?
 
@@ -37,10 +38,13 @@ where:
 - $\delta$: declination of the sun (rad) 
 - $\lambda$: latent heat of vvaporization, $\lambda=2.54 MJ/kg$
 
-$$LST={\frac{R_{s24}-\alpha_0 \cdot R_{s24} + \epsilon_A \cdot \sigma \cdot T_a^4 - R_n}{\epsilon_s \cdot \sigma}}^{0.25}$$
+$$LST=({\frac{R_{s24}-\alpha_0 \cdot R_{s24} + \epsilon_A \cdot \sigma \cdot T_a^4 - R_n}{\epsilon_s \cdot \sigma}})^{0.25}$$
 - $T_a:$ average air temperature ($\degree C$)
 
 ![alt text](Figures/SAFER-Workflow.png)
 # Reference
+Teixeira, A. H. D. C., Padovani, C. R., Andrade, R. G., Leivas, J. F., Victoria, D. D. C., & Galdino, S. (2015). Use of MODIS images to quantify the radiation and energy balances in the Brazilian Pantanal. Remote Sensing, 7(11), 14597-14619. https://doi.org/10.3390/rs71114597<br>
+Teixeira, A. H. D. C., Victoria, D. C., Andrade, R. G., Leivas, J. F., Bolfe, E. L., & Cruz, C. R. (2014, October). Coupling MODIS images and agrometeorological data for agricultural water productivity analyses in the Mato Grosso state, Brazil. In Remote Sensing for Agriculture, Ecosystems, and Hydrology XVI (Vol. 9239, pp. 278-291). SPIE. https://doi.org/10.1117/12.2065967<br>
 Safre, A.L.S., Nassar, A., Torres-Rua, A. et al. Performance of Sentinel-2 SAFER ET model for daily and seasonal estimation of grapevine water consumption. Irrig Sci 40, 635–654 (2022). https://doi.org/10.1007/s00271-022-00810-1<br>
+Task Committee on Revision of Manual 70. (2016, April). Evaporation, evapotranspiration, and irrigation water requirements. American Society of Civil Engineers. https://doi.org/10.1061/9780784414057<br>
 Gao, R., Khan, M., & Viers, J. (2026). A Python Toolkit for Reference Evapotranspiration ($ET_o$) Calculation Directly from Pandas DataFrames (Initial). Zenodo. https://doi.org/10.5281/zenodo.19197914

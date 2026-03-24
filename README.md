@@ -6,7 +6,12 @@
   - **Surface Albedo ($\alpha_0$):** Calculated using a weighted sum of multiple bi-directional reflectance bands (Visible and Shortwave).
 - Agrometeorological inputs (Point data)
   - **Air temperature ($T_a$):** Daily average temperature ($\degree C$)
-  - DOY for sun-earth distance and 
+  - **Global solar radiation ($R_{s24}$):** Daily total incident shortwave radiation ($MJ/m^2/day$ or $W/m^2$).
+  - **Reference evapotranspiration $ET_o$:** Daily depth ($mm/day$)
+- Physical & empirical constants
+  - **Regression coefficients ($a, b, c$):** Empirical values
+  - **Day of year ($DOY$):** Used for the calculation of the inverse relative distance Earth-Sun and solar declination for radiation balance
+  - **Geospatial metadata:** Station latitude and elevation (for atmospheric pressure and psychrometric constants)
 
 
 ![alt text](Figures/SAFER-Workflow.png)

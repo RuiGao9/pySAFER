@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19210748.svg)](https://doi.org/10.5281/zenodo.19210748)
+![Visitors Badge](https://visitor-badge.laobi.icu/badge?page_id=RuiGao9/pySAFER-123)
 # pySAFER: A Python Toolkit for the Simple Algorithm for actual Evapotranspiration Retrieving
 This repository :
 
@@ -47,6 +49,7 @@ where:
 
 $$LST=({\frac{R_{s24}-\alpha_0 \cdot R_{s24} + \epsilon_A \cdot \sigma \cdot T_a^4 - R_n}{\epsilon_s \cdot \sigma}})^{0.25}$$
 - $T_a:$ average air temperature ($\degree C$)
+
 
 # Reference
 Teixeira, A. H. D. C., Padovani, C. R., Andrade, R. G., Leivas, J. F., Victoria, D. D. C., & Galdino, S. (2015). Use of MODIS images to quantify the radiation and energy balances in the Brazilian Pantanal. Remote Sensing, 7(11), 14597-14619. https://doi.org/10.3390/rs71114597<br>

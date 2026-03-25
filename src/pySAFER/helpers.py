@@ -41,22 +41,22 @@ def calc_ra(latitude, doy, year):
 
 ## Step 2: Global solar radiation at the surface
 ## Either measured or estimated
-def get_solar_radiation(ra, rs_obs=None, tmax=None, tmin=None, coastal=False):
+def calc_incoming_solar_radiation(ra, rs_obs=None, tmax=None, tmin=None, coastal=False):
     """
-    获取地表太阳辐射 (Rs/R_GS)。
+    Calculate the incoming solar radiation (Rs)。
     
-    逻辑:
-    1. 如果提供 rs_obs (观测值)，直接返回观测值。
-    2. 如果 rs_obs 为 None，则使用 Hargreaves 公式根据气温估算。
+    Logic of this function:
+    1. if rs_obs (observation) is provided, use the observations directly
+    2. if rs_obs is None, use Hargreaves's method for estimation
     
-    参数:
-    ra: 大气外层辐射 (MJ/m2/day)，由 calc_ra 计算。
-    rs_obs: 气象站直接观测的太阳辐射 (可选)。
-    tmax: 最高温 (Celsius, 估算时必需)。
-    tmin: 最低温 (Celsius, 估算时必需)。
-    coastal: 是否为沿海地区 (k_Rs 系数不同)。
+    parameters:
+    ra: Extraterrestrial radaition (MJ/m2/day), calculated by function calc_ra 
+    rs_obs: observations from the meteorological station (optional)
+    tmax: the maximum air temperature (Celsius)
+    tmin: the minimum air temperature (Celsius)
+    coastal: if it is a coastal area (K_RS = 0.19 for coastal area; K_RS = 0.16 for inner land)
     """
-    # 选项 1: 使用观测值
+    # Option 1: Use observation directly
     if rs_obs is not None:
         return np.asarray(rs_obs)
     

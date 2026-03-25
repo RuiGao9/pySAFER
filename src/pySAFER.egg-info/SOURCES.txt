@@ -1,0 +1,10 @@
+LICENSE
+README.md
+pyproject.toml
+src/pySAFER/__init__.py
+src/pySAFER/helpers.py
+src/pySAFER.egg-info/PKG-INFO
+src/pySAFER.egg-info/SOURCES.txt
+src/pySAFER.egg-info/dependency_links.txt
+src/pySAFER.egg-info/requires.txt
+src/pySAFER.egg-info/top_level.txt

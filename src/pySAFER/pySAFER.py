@@ -220,12 +220,15 @@ def calc_ndvi(red, nir):
 def calc_flux_le_h(ndvi, albedo, rs_est, ra,
                    tmax, tmin,
                    rn_est, g_est,
-                   eto, 
+                   eto=None,
+                   p=None, elevation=None, 
                    para_as=0.06, para_bs=1.00, 
                    para_aa=0.94, para_ba=0.10,
                    para_a=1.8, para_b=-0.008,
                    sigma = 5.67e-8,
-                   param_lambda=2.45):
+                   param_lambda=2.45,
+                   epsilon=0.622,
+                   cp=1.013e-3):
     """
     Inputs:
     ndvi:
@@ -236,7 +239,8 @@ def calc_flux_le_h(ndvi, albedo, rs_est, ra,
     rn_est: net radiation, MJ/m2/day
     g_est: ground heat flux, MJ/m2/day
     eto: reference ET (mm/day) is obtained from another github repository called py-eto (https://github.com/RuiGao9/py-eto)
-
+    cp: the specific heat of moist air, ~1.013e-3
+    
     para_as and para_bs can refer to the paper below:
     Teixeira, A. H. D. C., Padovani, C. R., Andrade, R. G., Leivas, J. F., Victoria, D. D. C., & Galdino, S. (2015). 
     Use of MODIS images to quantify the radiation and energy balances in the Brazilian Pantanal. 
@@ -291,6 +295,19 @@ def calc_flux_le_h(ndvi, albedo, rs_est, ra,
     # When NDVI <= 0
     mask_nonveg = ndvi <= 0
     if np.any(mask_nonveg):
+        e_sat = 0.6108 * np.exp(17.27*ta_C/ta_C+237.3)
+        delta = (4098 * e_sat)/(ta_C + 237.3)**2
+        # Psychrometric constant equation
+        if p is None:
+            if elevation is not None:
+                p = 101.3 * ((293 - 0.0065*elevation)/293)**5.26
+            else:
+                warnings.war(
+                    "Pressure and Elevation are both None."
+                    "Using default sea-level pressure 101.3 kPa"
+                )
+                p = 101.3
+        gamma = (1.013e-3 * p)/(param_lambda *  epsilon)
         le_est[mask_nonveg] = None
         h_est[mask_nonveg] = None
 

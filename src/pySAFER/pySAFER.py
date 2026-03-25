@@ -106,9 +106,26 @@ def calc_albedo(red, nir, method='Teixeira_2015'):
     # Put a physical value range for albedo (0.0 <= albedo <= 1.0)
     return np.clip(albedo, 0.0, 1.0)
 
-# Step 4: Net shortwave radiation (Rns)
 
-# Net radiation calculation
+# Step 4: Reflected global radiation (upwelling shortwave radiation) Rr
+# If this is observed, use the observation directly
+def calc_up_shortwave(rs_est, albedo, r_up_obs=None):
+    """
+    ra: extraterrestrial radiation (Ra) 
+    rs_est: incoming solar radiation (MJ/m2/day)
+    albedo: a0
+    
+    return
+    r_reflect: reflected global radiation
+    """
+    if r_up_obs is not None:
+        r_reflect = np.asarray(r_up_obs)
+    r_reflect = rs_est * albedo
+
+    return r_reflect
+
+# Step 5: Net radiation calculation (Rn)
+
 
 def calc_ndvi(red, nir):
     """

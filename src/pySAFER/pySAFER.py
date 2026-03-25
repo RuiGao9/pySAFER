@@ -80,6 +80,7 @@ def calc_incoming_solar_radiation(ra, rs_obs=None, tmax=None, tmin=None, coastal
     raise ValueError("Either global solar radiation observations or"
                       "the extreme air temperature (Tmax and Tmin) need to be provided.")
 
+
 ## Step 3: Albedo (a0) calculation based on Red and NIR bands
 def calc_albedo(red, nir, method='Teixeira_2015'):
     """
@@ -87,10 +88,23 @@ def calc_albedo(red, nir, method='Teixeira_2015'):
     The reflectance value ranges between 0 and 1
     method can only pick from 'Teixeira_2015'
     """
+    supported_methods = ['Teixeira_2015','Demo']
+    if method not in supported_methods:
+        raise ValueError(
+            f"Error: '{method}' is not supported。 "
+            f"Please find a method among {supported_methods}"
+        )
     red = np.asarray(red)
     nir = np.asarray(nir)
     if method == 'Teixeira_2015':
         albedo = 0.08 + 0.41*red + 0.14*nir
+    elif method == 'Demo': # Change this if a new method was found
+        albedo = 0.07 + 0.40*red + 0.13*nir
+    else:
+        albedo = "None"
+
+    # Put a physical value range for albedo (0.0 <= albedo <= 1.0)
+    return np.clip(albedo, 0.0, 1.0)
 
 # Step 4: Net shortwave radiation (Rns)
 

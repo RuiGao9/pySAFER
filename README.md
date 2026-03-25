@@ -9,6 +9,7 @@ This repository :
 ```bash
 pip install "git+https://github.com/RuiGao9/pySAFER.git" 
 ```
+
 # SAFER Concepts
 ## Model Flowchart
 <p align="center">

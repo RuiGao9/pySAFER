@@ -3,24 +3,22 @@ import numpy as np
 
 def calc_ndvi(red, nir):
     """
-    计算归一化植被指数 (NDVI)。
-    支持输入：单个数值、Pandas Series (列) 或 NumPy 数组 (图像)。
+    Calculate NDVI
+    Support inputs: single record, Pandas Series (columns) or NumPy array (image)
     
-    参数:
-    red: 红色波段反射率 (0-1)
-    nir: 近红外波段反射率 (0-1)
+    parameters:
+    red: reflectance of the red band (0-1)
+    nir: reflectance of the near infrared band (0-1)
     
-    返回:
-    ndvi: 范围在 [-1, 1] 之间的植被指数
+    return:
+    ndvi: value ranges at [-1, 1]
     """
-    # 将输入转换为 numpy 数组以确保计算兼容性
+    # Covert input as numpy, make sure it could be calculated
     red = np.asarray(red)
     nir = np.asarray(nir)
-    
-    # 防止除以零的错误 (例如在水体或阴影区)
+    # Avoid 0 for the denominator 
     denominator = nir + red
-    
-    # 使用 np.where 处理分母为 0 的情况，将其设为 NaN 或 0
+    # Using np.where to process denominator whose value is 0, NaN for that situation
     ndvi = np.where(denominator != 0, (nir - red) / denominator, np.nan)
     
     return ndvi

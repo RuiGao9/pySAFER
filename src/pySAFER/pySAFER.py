@@ -160,8 +160,7 @@ def calc_r_net(rs_est, ra, albedo, tmax, tmin,
         return np.asarray(rn_est)
 
     al = para_c * (tmax+tmin)/2 - para_d
-    print(al.iloc[1],tmax.iloc[1],tmin.iloc[1])
-    rn_est = (1 - albedo) * rs_est - al * (rs_est/ra)
+    rn_est = (1 - albedo) * rs_est/0.0864 - al * (rs_est/ra)
     # Adjusting the unit from W/m2 to MJ/m2/day
     rn_est = rn_est * 0.0864
 

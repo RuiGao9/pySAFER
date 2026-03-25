@@ -1,4 +1,5 @@
 import numpy as np
+import warnings
 
 
 ### === === === === === ###
@@ -216,18 +217,37 @@ def calc_ndvi(red, nir):
     return ndvi
 
 
-def calc_flux_le_h(ndvi, albedo,
-                   rn_est, g_est 
-                   para_as=0.06, para_bs=1.00):
+def calc_flux_le_h(ndvi, albedo, rs_est, ra,
+                   tmax, tmin,
+                   rn_est, g_est,
+                   eto, 
+                   para_as=0.06, para_bs=1.00, 
+                   para_aa=0.94, para_ba=0.10,
+                   para_a=1.8, para_b=-0.008,
+                   sigma = 5.67e-8,
+                   param_lambda=2.45):
     """
     Inputs:
     ndvi:
     albedo:
+    rs_est:
+    ra:
+    tmax and tmin: the unit is Celsius
+    rn_est: net radiation, MJ/m2/day
+    g_est: ground heat flux, MJ/m2/day
+    eto: reference ET (mm/day) is obtained from another github repository called py-eto (https://github.com/RuiGao9/py-eto)
+
     para_as and para_bs can refer to the paper below:
     Teixeira, A. H. D. C., Padovani, C. R., Andrade, R. G., Leivas, J. F., Victoria, D. D. C., & Galdino, S. (2015). 
     Use of MODIS images to quantify the radiation and energy balances in the Brazilian Pantanal. 
     Remote Sensing, 7(11), 14597-14619. 
     https://doi.org/10.3390/rs71114597
+    
+    para_a and para_b can refer to the paper below:
+    Safre, A.L.S., Nassar, A., Torres-Rua, A. et al. 
+    Performance of Sentinel-2 SAFER ET model for daily and seasonal estimation of grapevine water consumption. 
+    Irrig Sci 40, 635–654 (2022). 
+    https://doi.org/10.1007/s00271-022-00810-1
 
     returns:
     le_est: latent heat flux, MJ/m2/day
@@ -236,9 +256,43 @@ def calc_flux_le_h(ndvi, albedo,
     le_est = np.zeros_like(ndvi, dtype=float)
     h_est = np.zeros_like(ndvi, dtype=float)
     flux_avaliable = rn_est - g_est
+    # Temperature is K
+    ta_C = (tmax + tmin)/2
+    ta_K = ta_C + 273.15
 
     # When NDVI > 0
     mask_veg = ndvi > 0
     if np.any(mask_veg):
+        epsilon_a = para_aa * (-np.log(rs_est/ra))**para_ba
+        epsilon_s = para_as * (np.log(ndvi)) + para_bs
+        # LST calculation
+        # Numerator
+        numerator = rs_est/0.0864 - (albedo * rs_est/0.0864) + (epsilon_a * sigma * (ta_K**4)) - rn_est
+        invalid_mask = numerator <= 0
+        num_invalid = np.sum(invalid_mask)
+        if num_invalid > 0:
+            warnings.warn(
+                f"{num_invalid} elements were below or equal to 0 during the LST estimation."
+                f"This was forced to be 0.1 to make the model running!"
+            )
+        # Denominator
+        denominator = epsilon_s * sigma
+
+        # LST finanizing
+        lst_K = (np.maximum(numerator, 0.1) / denominator)**0.25
+        lst_C = lst_K - 273.15
+
+        # Calculate 
+        et_fr = np.exp(para_a + para_b * lst_C/(albedo*ndvi))
+
+        le_est[mask_veg] = (et_fr * eto)*param_lambda
+        h_est[mask_veg] = rn_est - g_est - le_est
+
+    # When NDVI <= 0
+    mask_nonveg = ndvi <= 0
+    if np.any(mask_nonveg):
+        le_est[mask_nonveg] = None
+        h_est[mask_nonveg] = None
+
 
     return le_est, h_est

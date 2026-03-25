@@ -1,6 +1,10 @@
 import numpy as np
 
 
+### === === === === === ###
+### Component 1
+### Main process for net radiation and ground heat flux estimation
+### === === === === === ###
 ## Step 1: Extraterrestrial radiation (Ra) calculation
 def calc_ra(latitude, doy, year):
     """
@@ -184,6 +188,11 @@ def calc_flux_g(rn_est, albedo, a_g=3.98, b_g=-25.47, g_obs=None):
 
     return flux_g
 
+
+### === === === === === ###
+### Component 2
+### LST estimation and ETa calculation when NDVI > 0
+### === === === === === ###
 
 def calc_ndvi(red, nir):
     """

@@ -240,7 +240,7 @@ def calc_flux_le_h(ndvi, albedo, rs_est, ra,
     g_est: ground heat flux, MJ/m2/day
     eto: reference ET (mm/day) is obtained from another github repository called py-eto (https://github.com/RuiGao9/py-eto)
     cp: the specific heat of moist air, ~1.013e-3
-    
+
     para_as and para_bs can refer to the paper below:
     Teixeira, A. H. D. C., Padovani, C. R., Andrade, R. G., Leivas, J. F., Victoria, D. D. C., & Galdino, S. (2015). 
     Use of MODIS images to quantify the radiation and energy balances in the Brazilian Pantanal. 
@@ -308,8 +308,8 @@ def calc_flux_le_h(ndvi, albedo, rs_est, ra,
                 )
                 p = 101.3
         gamma = (1.013e-3 * p)/(param_lambda *  epsilon)
-        le_est[mask_nonveg] = None
-        h_est[mask_nonveg] = None
+        le_est[mask_nonveg] = (delta * (rn_est/0.0864 - g_est/0.0864)/(delta + gamma)) * 0.0864
+        h_est[mask_nonveg] = rn_est - le_est - g_est
 
 
     return le_est, h_est

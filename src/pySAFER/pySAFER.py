@@ -5,10 +5,18 @@ import numpy as np
 def calc_ra(latitude, doy, year):
     """
     Calculate extraterrestrial radiation (Ra)
-    Supports scalar values, Numpy arrays, or Pandas Series.
+    Details about the calculation can follow the paper below:
     Torres, A. F., Walker, W. R., & McKee, M. (2011). 
     Forecasting daily potential evapotranspiration using machine learning and limited climatic data. 
     Agricultural Water Management, 98(4), 553-562.
+
+    Inputs:
+    latitude: latitude of the site
+    doy: day of year
+    year: calendar year
+
+    return: 
+    ra: extraterrestrial radiation in MJ/m2/day
     """
     # Convert latitude to radians
     lat_rad = np.radians(latitude)
@@ -43,7 +51,8 @@ def calc_ra(latitude, doy, year):
 ## Either measured or estimated
 def calc_incoming_solar_radiation(ra, rs_obs=None, tmax=None, tmin=None, coastal=False):
     """
-    Calculate the incoming solar radiation (Rs)。
+    Calculate the incoming solar radiation (Rs)
+    The unit of the output is MJ/m2/day
     
     Logic of this function:
     1. if rs_obs (observation) is provided, use the observations directly
@@ -52,6 +61,7 @@ def calc_incoming_solar_radiation(ra, rs_obs=None, tmax=None, tmin=None, coastal
     parameters:
     ra: Extraterrestrial radaition (MJ/m2/day), calculated by function calc_ra 
     rs_obs: observations from the meteorological station (optional)
+    rs_obs_unit: normally, the unit provided by the meteorological station is in W/m2
     tmax: the maximum air temperature (Celsius)
     tmin: the minimum air temperature (Celsius)
     coastal: if it is a coastal area (K_RS = 0.19 for coastal area; K_RS = 0.16 for inner land)
@@ -111,28 +121,49 @@ def calc_albedo(red, nir, method='Teixeira_2015'):
 # If this is observed, use the observation directly
 def calc_up_shortwave(rs_est, albedo, r_up_obs=None):
     """
+    The unit of the output is MJ/m2/day
+
     ra: extraterrestrial radiation (Ra) 
     rs_est: incoming solar radiation (MJ/m2/day)
     albedo: a0
+    r_up_obs: upwelling shortwave radiation observations in W/m2
     
     return
     r_reflect: reflected global radiation
     """
     if r_up_obs is not None:
-        r_reflect = np.asarray(r_up_obs)
+        return np.asarray(r_up_obs)
+
     r_reflect = rs_est * albedo
 
     return r_reflect
 
 # Step 5: Net radiation calculation (Rn)
-def calc_r_net(rs_est, ra, albedo, tmax, tmin, rn_obs=None, para_c=6.99, para_d=39.93):
+def calc_r_net(rs_est, ra, albedo, tmax, tmin, 
+               rn_obs=None, para_c=6.99, para_d=39.93):
     """
-    
+    The unit of the output is MJ/m2/day
+
+    rs_est: global solar radiation (Rs), MJ/m2/day
+    ra: extraterrestrial radiation (Ra), MJ/m2/day
+    albedo
+    tmax: maximum air temperature, Celsius 
+    tmin: minimum air temperature, Celsius
+    rn_obs: tell the function if the observation is available. If yes, the observation will be used directly
+    para_c and para_d: empirical values from:
+    Teixeira, A. H. D. C., Padovani, C. R., Andrade, R. G., Leivas, J. F., Victoria, D. D. C., & Galdino, S. (2015). 
+    Use of MODIS images to quantify the radiation and energy balances in the Brazilian Pantanal. 
+    Remote Sensing, 7(11), 14597-14619. 
+    https://doi.org/10.3390/rs71114597
     """
     if rn_obs is not None:
         return np.asarray(rn_est)
+
     al = para_c * (tmax+tmin)/2 - para_d
+    print(al.iloc[1],tmax.iloc[1],tmin.iloc[1])
     rn_est = (1 - albedo) * rs_est - al * (rs_est/ra)
+    # Adjusting the unit from W/m2 to MJ/m2/day
+    rn_est = rn_est * 0.0864
 
     return rn_est
 

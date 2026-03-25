@@ -29,11 +29,7 @@ The easiest way to get started is by exploring the provided Jupyter Notebook: `p
 
 # SAFER Concepts
 ## Model Flowchart
-<p align="center">
-<img src="Figures/SAFER-Flowchart.PNG" width="400" title="SAFER">
 
-<em>Figure 1. Conceptual framework of the SAFER model. </em>
-</p>
 
 ### Required inputs
 - Satellite remote sensing inputs

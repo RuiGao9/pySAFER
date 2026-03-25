@@ -39,7 +39,7 @@ def calc_ra(latitude, doy, year):
     return ra
 
 
-## Step 2: Global solar radiation at the surface
+## Step 2: Global solar radiation (Rs) at the surface
 ## Either measured or estimated
 def calc_incoming_solar_radiation(ra, rs_obs=None, tmax=None, tmin=None, coastal=False):
     """
@@ -80,7 +80,22 @@ def calc_incoming_solar_radiation(ra, rs_obs=None, tmax=None, tmin=None, coastal
     raise ValueError("Either global solar radiation observations or"
                       "the extreme air temperature (Tmax and Tmin) need to be provided.")
 
-## Step 3:
+## Step 3: Albedo (a0) calculation based on Red and NIR bands
+def calc_albedo(red, nir, method='Teixeira_2015'):
+    """
+    Calculate albedo based on red and nir reflectance
+    The reflectance value ranges between 0 and 1
+    method can only pick from 'Teixeira_2015'
+    """
+    red = np.asarray(red)
+    nir = np.asarray(nir)
+    if method == 'Teixeira_2015':
+        albedo = 0.08 + 0.41*red + 0.14*nir
+
+# Step 4: Net shortwave radiation (Rns)
+
+# Net radiation calculation
+
 def calc_ndvi(red, nir):
     """
     Calculate NDVI

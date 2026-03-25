@@ -1,29 +1,7 @@
 import numpy as np
 
 
-def calc_ndvi(red, nir):
-    """
-    Calculate NDVI
-    Support inputs: single record, Pandas Series (columns) or NumPy array (image)
-    
-    parameters:
-    red: reflectance of the red band (0-1)
-    nir: reflectance of the near infrared band (0-1)
-    
-    return:
-    ndvi: value ranges at [-1, 1]
-    """
-    # Covert input as numpy, make sure it could be calculated
-    red = np.asarray(red)
-    nir = np.asarray(nir)
-    # Avoid 0 for the denominator 
-    denominator = nir + red
-    # Using np.where to process denominator whose value is 0, NaN for that situation
-    ndvi = np.where(denominator != 0, (nir - red) / denominator, np.nan)
-    
-    return ndvi
-
-
+## Step 1: Extraterrestrial radiation (Ra) calculation
 def calc_ra(latitude, doy, year):
     """
     Calculate extraterrestrial radiation (Ra)
@@ -59,3 +37,68 @@ def calc_ra(latitude, doy, year):
         np.cos(lat_rad) * np.cos(ds) * np.sin(ws)
     )
     return ra
+
+
+## Step 2: Global solar radiation at the surface
+## Either measured or estimated
+def get_solar_radiation(ra, rs_obs=None, tmax=None, tmin=None, coastal=False):
+    """
+    获取地表太阳辐射 (Rs/R_GS)。
+    
+    逻辑:
+    1. 如果提供 rs_obs (观测值)，直接返回观测值。
+    2. 如果 rs_obs 为 None，则使用 Hargreaves 公式根据气温估算。
+    
+    参数:
+    ra: 大气外层辐射 (MJ/m2/day)，由 calc_ra 计算。
+    rs_obs: 气象站直接观测的太阳辐射 (可选)。
+    tmax: 最高温 (Celsius, 估算时必需)。
+    tmin: 最低温 (Celsius, 估算时必需)。
+    coastal: 是否为沿海地区 (k_Rs 系数不同)。
+    """
+    # 选项 1: 使用观测值
+    if rs_obs is not None:
+        return np.asarray(rs_obs)
+    
+    # Option 2: Using Hargraves's method
+    # Hargreaves, G. H., & Allen, R. G. (2003). 
+    # History and evaluation of Hargreaves evapotranspiration equation. 
+    # Journal of irrigation and drainage engineering, 
+    # 129(1), 53-63.
+    if tmax is not None and tmin is not None:
+        k_rs = 0.19 if coastal else 0.16
+        # Make sure the input is numpy array
+        tmax = np.asarray(tmax)
+        tmin = np.asarray(tmin)
+        ra = np.asarray(ra)
+        
+        tdiff = np.maximum(tmax - tmin, 0)
+        rs_est = k_rs * np.sqrt(tdiff) * ra
+        return rs_est
+    
+    # Raise errors if needed inputs are missing
+    raise ValueError("Either global solar radiation observations or"
+                      "the extreme air temperature (Tmax and Tmin) need to be provided.")
+
+## Step 3:
+def calc_ndvi(red, nir):
+    """
+    Calculate NDVI
+    Support inputs: single record, Pandas Series (columns) or NumPy array (image)
+    
+    parameters:
+    red: reflectance of the red band (0-1)
+    nir: reflectance of the near infrared band (0-1)
+    
+    return:
+    ndvi: value ranges at [-1, 1]
+    """
+    # Covert input as numpy, make sure it could be calculated
+    red = np.asarray(red)
+    nir = np.asarray(nir)
+    # Avoid 0 for the denominator 
+    denominator = nir + red
+    # Using np.where to process denominator whose value is 0, NaN for that situation
+    ndvi = np.where(denominator != 0, (nir - red) / denominator, np.nan)
+    
+    return ndvi

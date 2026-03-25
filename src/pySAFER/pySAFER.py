@@ -192,7 +192,7 @@ def calc_flux_g(rn_est, albedo, a_g=3.98, b_g=-25.47, g_obs=None):
 
 ### === === === === === ###
 ### Component 2
-### LST estimation and ETa calculation when NDVI > 0
+### LST estimation and energy components estimation when NDVI > 0
 ### === === === === === ###
 def calc_ndvi(red, nir):
     """

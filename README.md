@@ -1,7 +1,10 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19210748.svg)](https://doi.org/10.5281/zenodo.19210748)
 ![Visitors Badge](https://visitor-badge.laobi.icu/badge?page_id=RuiGao9/pySAFER-123)
-# pySAFER: A Python Toolkit for the Simple Algorithm for actual Evapotranspiration Retrieving
-This repository :
+# pySAFER: A Python Toolkit for the Simple Algorithm For actual Evapotranspiration Retrieving
+This toolkit is designed to streamline $ET_a$ estimation using the Simple Algorithm for Evapotranspiration Retrieving (SAFER). Whether you are working with station-based point data or satellite-derived imagery, `pySAFER` provides the necessary workflows to quantify water loss.
+This repository is structured to help you:
+- **Apply the Model:** Follow hands-on tutorials to run $ET_a$ estimations using your own datasets.
+- **Understand the Science:** Explore the core concepts and mathematical logic that drive the SAFER framework.
 
 # How To Use This Repository?
 

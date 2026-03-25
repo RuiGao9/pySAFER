@@ -167,6 +167,24 @@ def calc_r_net(rs_est, ra, albedo, tmax, tmin,
     return rn_est
 
 
+# Step 6: Ground heat flux estimation/observation (G)
+def calc_flux_g(rn_est, albedo, a_g=3.98, b_g=-25.47, g_obs=None):
+    """
+    Inputs:
+    rn_est: either estimated or observed net radiation
+    g_obs: if observation is provided, the unit should be W/m2
+
+    return:
+    flux_g: ground heat flux, MJ/m2/day
+    """
+    if g_obs is not None:
+        return np.asarray(g_obs) * 0.0864
+    
+    flux_g = (rn_est/0.0864 * a_g * np.exp(b_g * albedo)) * 0.0864
+
+    return flux_g
+
+
 def calc_ndvi(red, nir):
     """
     Calculate NDVI

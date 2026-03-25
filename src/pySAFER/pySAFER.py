@@ -287,29 +287,28 @@ def calc_flux_le_h(ndvi, albedo, rs_est, ra,
         lst_C = lst_K - 273.15
 
         # Calculate 
-        et_fr = np.exp(para_a + para_b * lst_C/(albedo*ndvi))
+        et_fr = np.exp(para_a + para_b * lst_C[mask_veg]/(albedo[mask_veg]*ndvi[mask_veg]))
 
-        le_est[mask_veg] = (et_fr * eto)*param_lambda
-        h_est[mask_veg] = rn_est - g_est - le_est
+        le_est[mask_veg] = (et_fr * eto[mask_veg])*param_lambda
+        h_est[mask_veg] = rn_est[mask_veg] - g_est[mask_veg] - le_est[mask_veg]
 
     # When NDVI <= 0
     mask_nonveg = ndvi <= 0
     if np.any(mask_nonveg):
-        e_sat = 0.6108 * np.exp(17.27*ta_C/ta_C+237.3)
-        delta = (4098 * e_sat)/(ta_C + 237.3)**2
+        e_sat = 0.6108 * np.exp(17.27*ta_C[mask_nonveg]/ta_C[mask_nonveg]+237.3)
+        delta = (4098 * e_sat)/(ta_C[mask_nonveg] + 237.3)**2
         # Psychrometric constant equation
         if p is None:
             if elevation is not None:
-                p = 101.3 * ((293 - 0.0065*elevation)/293)**5.26
+                p_val = 101.3 * ((293 - 0.0065*elevation[mask_nonveg])/293)**5.26
             else:
                 warnings.war(
                     "Pressure and Elevation are both None."
                     "Using default sea-level pressure 101.3 kPa"
                 )
-                p = 101.3
-        gamma = (1.013e-3 * p)/(param_lambda *  epsilon)
-        le_est[mask_nonveg] = (delta * (rn_est/0.0864 - g_est/0.0864)/(delta + gamma)) * 0.0864
-        h_est[mask_nonveg] = rn_est - le_est - g_est
-
+                p_val = 101.3
+        gamma = (cp * p_val)/(param_lambda *  epsilon)
+        le_est[mask_nonveg] = (delta * (rn_est[mask_nonveg] - g_est[mask_nonveg])/(delta + gamma))
+        h_est[mask_nonveg] = rn_est[mask_nonveg] - le_est[mask_nonveg] - g_est[mask_nonveg]
 
     return le_est, h_est

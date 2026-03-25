@@ -125,6 +125,16 @@ def calc_up_shortwave(rs_est, albedo, r_up_obs=None):
     return r_reflect
 
 # Step 5: Net radiation calculation (Rn)
+def calc_r_net(rs_est, ra, albedo, tmax, tmin, rn_obs=None, para_c=6.99, para_d=39.93):
+    """
+    
+    """
+    if rn_obs is not None:
+        return np.asarray(rn_est)
+    al = para_c * (tmax+tmin)/2 - para_d
+    rn_est = (1 - albedo) * rs_est - al * (rs_est/ra)
+
+    return rn_est
 
 
 def calc_ndvi(red, nir):

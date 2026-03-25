@@ -184,16 +184,15 @@ def calc_flux_g(rn_est, albedo, a_g=3.98, b_g=-25.47, g_obs=None):
     if g_obs is not None:
         return np.asarray(g_obs) * 0.0864
     
-    flux_g = (rn_est/0.0864 * a_g * np.exp(b_g * albedo)) * 0.0864
+    g_est = (rn_est/0.0864 * a_g * np.exp(b_g * albedo)) * 0.0864
 
-    return flux_g
+    return g_est
 
 
 ### === === === === === ###
 ### Component 2
 ### LST estimation and ETa calculation when NDVI > 0
 ### === === === === === ###
-
 def calc_ndvi(red, nir):
     """
     Calculate NDVI
@@ -215,3 +214,31 @@ def calc_ndvi(red, nir):
     ndvi = np.where(denominator != 0, (nir - red) / denominator, np.nan)
     
     return ndvi
+
+
+def calc_flux_le_h(ndvi, albedo,
+                   rn_est, g_est 
+                   para_as=0.06, para_bs=1.00):
+    """
+    Inputs:
+    ndvi:
+    albedo:
+    para_as and para_bs can refer to the paper below:
+    Teixeira, A. H. D. C., Padovani, C. R., Andrade, R. G., Leivas, J. F., Victoria, D. D. C., & Galdino, S. (2015). 
+    Use of MODIS images to quantify the radiation and energy balances in the Brazilian Pantanal. 
+    Remote Sensing, 7(11), 14597-14619. 
+    https://doi.org/10.3390/rs71114597
+
+    returns:
+    le_est: latent heat flux, MJ/m2/day
+    h_est: sensible heat flux, MJ/m2/day
+    """
+    le_est = np.zeros_like(ndvi, dtype=float)
+    h_est = np.zeros_like(ndvi, dtype=float)
+    flux_avaliable = rn_est - g_est
+
+    # When NDVI > 0
+    mask_veg = ndvi > 0
+    if np.any(mask_veg):
+
+    return le_est, h_est

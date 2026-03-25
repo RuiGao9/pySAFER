@@ -6,11 +6,25 @@ This repository is structured to help you:
 - **Apply the Model:** Follow hands-on tutorials to run $ET_a$ estimations using your own datasets.
 - **Understand the Science:** Explore the core concepts and mathematical logic that drive the SAFER framework.
 
-# How To Use This Repository?
-
-## Installation
+## Model Installation
 ```bash
 pip install "git+https://github.com/RuiGao9/pySAFER.git" 
+```
+
+## Model Inputs
+
+## Running the Model
+The easiest way to get started is by exploring the provided Jupyter Notebook: `pySAFER_Run.ipynb`. This notebook serves as a comprehensive template that demonstrates the end-to-end workflow:
+- **Environment Setup:** How to properly import the pySAFER library and its core modules.
+- **Data Ingestion:** Loading and preprocessing the included demo datasets (e.g., `point_samples.txt`).
+- **Core Computations:** Step-by-step execution of the SAFER algorithm, including:
+  - Vegetation indices (NDVI)
+  - Extraterrestrial radiation ($R_a$)
+  - Surface solar radiation ($R_s$) using both observed and estimated (Hargreaves) methods.
+- **Results & Visualization:** Generating $ET_a$ estimates and validating them with built-in plotting tools.
+
+```python
+
 ```
 
 # SAFER Concepts

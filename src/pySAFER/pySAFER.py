@@ -259,7 +259,8 @@ def calc_flux_le_h(ndvi, albedo, rs_est, ra,
     """
     le_est = np.zeros_like(ndvi, dtype=float)
     h_est = np.zeros_like(ndvi, dtype=float)
-    flux_avaliable = rn_est - g_est
+    et_fr = np.zeros_like(ndvi, dtype=float)
+    
     # Temperature is K
     ta_C = (tmax + tmin)/2
     ta_K = ta_C + 273.15
@@ -287,9 +288,9 @@ def calc_flux_le_h(ndvi, albedo, rs_est, ra,
         lst_C = lst_K - 273.15
 
         # Calculate 
-        et_fr = np.exp(para_a + para_b * lst_C[mask_veg]/(albedo[mask_veg]*ndvi[mask_veg]))
+        et_fr[mask_veg] = np.exp(para_a + para_b * lst_C[mask_veg]/(albedo[mask_veg]*ndvi[mask_veg]))
 
-        le_est[mask_veg] = (et_fr * eto[mask_veg])*param_lambda
+        le_est[mask_veg] = (et_fr[mask_veg] * eto[mask_veg])*param_lambda
         h_est[mask_veg] = rn_est[mask_veg] - g_est[mask_veg] - le_est[mask_veg]
 
     # When NDVI <= 0
@@ -310,5 +311,6 @@ def calc_flux_le_h(ndvi, albedo, rs_est, ra,
         gamma = (cp * p_val)/(param_lambda *  epsilon)
         le_est[mask_nonveg] = (delta * (rn_est[mask_nonveg] - g_est[mask_nonveg])/(delta + gamma))
         h_est[mask_nonveg] = rn_est[mask_nonveg] - le_est[mask_nonveg] - g_est[mask_nonveg]
+        et_fr[mask_nonveg] = 1.0
 
-    return le_est, h_est
+    return le_est, h_est, et_fr

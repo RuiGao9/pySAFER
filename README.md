@@ -42,7 +42,14 @@ The easiest way to get started is by exploring the provided Jupyter Notebook: `p
 
 # SAFER Concepts
 ## Model Flowchart
-
+  <div align="center">
+    <figure>
+      <img src="Figures/energy_balance.png" alt="weights" width="35%" />
+      <figcaption style="color: grey; font-style: italic; font-size: 0.9em; margin-top: 10px;">
+            Energy balance model described by Silva, et al. (2019).
+      </figcaption>
+    </figure>
+  </div>
 
 ### Required inputs
 - Satellite remote sensing inputs

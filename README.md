@@ -66,6 +66,7 @@ $$LST=({\frac{R_{s24}-\alpha_0 \cdot R_{s24} + \epsilon_A \cdot \sigma \cdot T_a
 
 
 # Reference
+Silva, C. D. O. F., de Castro Teixeira, A. H., & Manzione, R. L. (2019). Agriwater: An R package for spatial modelling of energy balance and actual evapotranspiration using satellite images and agrometeorological data. Environmental modelling & software, 120, 104497. https://doi.org/10.1016/j.envsoft.2019.104497<br>
 Teixeira, A. H. D. C., Padovani, C. R., Andrade, R. G., Leivas, J. F., Victoria, D. D. C., & Galdino, S. (2015). Use of MODIS images to quantify the radiation and energy balances in the Brazilian Pantanal. Remote Sensing, 7(11), 14597-14619. https://doi.org/10.3390/rs71114597<br>
 Teixeira, A. H. D. C., Victoria, D. C., Andrade, R. G., Leivas, J. F., Bolfe, E. L., & Cruz, C. R. (2014, October). Coupling MODIS images and agrometeorological data for agricultural water productivity analyses in the Mato Grosso state, Brazil. In Remote Sensing for Agriculture, Ecosystems, and Hydrology XVI (Vol. 9239, pp. 278-291). SPIE. https://doi.org/10.1117/12.2065967<br>
 Safre, A.L.S., Nassar, A., Torres-Rua, A. et al. Performance of Sentinel-2 SAFER ET model for daily and seasonal estimation of grapevine water consumption. Irrig Sci 40, 635–654 (2022). https://doi.org/10.1007/s00271-022-00810-1<br>

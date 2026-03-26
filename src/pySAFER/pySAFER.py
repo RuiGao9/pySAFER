@@ -177,20 +177,43 @@ def calc_r_net(rs_est, ra, albedo, tmax, tmin,
 
 
 # Step 6: Ground heat flux estimation/observation (G)
-def calc_flux_g(rn_est, albedo, a_g=3.98, b_g=-25.47, g_obs=None):
+def calc_flux_g(rn_est, albedo, g_obs=None, method='paras_2015'):
     """
     Inputs:
     rn_est: either estimated or observed net radiation
     g_obs: if observation is provided, the unit should be W/m2
 
+    paras_2015: parameters come from the paper below
+    Teixeira, A. H. D. C., Padovani, C. R., Andrade, R. G., Leivas, J. F., Victoria, D. D. C., & Galdino, S. 
+    (2015). 
+    Use of MODIS images to quantify the radiation and energy balances in the Brazilian Pantanal. 
+    Remote Sensing, 7(11), 14597-14619. 
+    https://doi.org/10.3390/rs71114597
+    
+    paras_2019: parameters come from the paper below
+    Silva, C. D. O. F., de Castro Teixeira, A. H., & Manzione, R. L. 
+    (2019). 
+    Agriwater: An R package for spatial modelling of energy balance and actual evapotranspiration using satellite images and agrometeorological data. 
+    Environmental modelling & software, 120, 104497. 
+    https://doi.org/10.1016/j.envsoft.2019.104497
+    
     return:
     flux_g: ground heat flux, MJ/m2/day
     """
     if g_obs is not None:
         return np.asarray(g_obs) * 0.0864
-    
+    if method == 'paras_2015':
+        a_g = 3.98
+        b_g = -25.47
+    elif method == 'paras_2019':
+        a_g = 3.98
+        b_g = -31.98
+    else:
+        raise ValueError(
+            f"Unknown method: {method}. Use 'paras_2015' or 'paras_2019'."
+        )
     g_est = (rn_est/0.0864 * a_g * np.exp(b_g * albedo)) * 0.0864
-
+    
     return g_est
 
 

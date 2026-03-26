@@ -12,7 +12,9 @@ pip install "git+https://github.com/RuiGao9/pySAFER.git"
 ```
 
 ## Model Inputs
-- **Albedo ($\alpha_0$):** The ratio between reflected and incident sunlight.
+- **Albedo ($\alpha_0$):** The ratio between reflected and incident sunlight, like the equation below. $\alpha_P$ is the albedo for the visible and infrared partition of the electromagnetic spectrum. $w_{band}$ represents different narrow-band reflectances. $w_{band}$ represents weights for each band.
+$$\alpha_P=\sum{w_{band} \cdot r_{band}}$$
+- 
 
 ## Running the Model
 The easiest way to get started is by exploring the provided Jupyter Notebook: `pySAFER_Run.ipynb`. This notebook serves as a comprehensive template that demonstrates the end-to-end workflow:

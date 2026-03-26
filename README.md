@@ -20,9 +20,8 @@ $$\alpha_P=\sum{w_{band} \cdot r_{band}}$$
 <div align="center">
   <figure>
     <img src="Figures/weights.png" alt="weights" width="35%" />
-    <figcaption style="color: grey; font-style: italic; font-size: 0.9em; margin-top: 10px;">
-          One case from the paper called agriwater: An R package for spatial modelling of energy balance and actual evapotranspiration using satellite images and agrometeorological data
-    </figcaption>
+      <p><i>One case from the paper called agriwater: An R package for spatial modelling of energy balance and actual evapotranspiration using satellite images and agrometeorological data</i></p>
+    
   </figure>
 </div>
 
@@ -79,10 +78,12 @@ This can be either measured by sensors or estimated by the equation from [Hargre
 - Extraterrestrial radiation ($MJ \cdot m^{-2} \cdot day$), estimated from above
 - The mean maximum air temperature ($\degree C$)
 - The mean minimum air temperature ($\degree C$)
+- 
 $$R_s=K_{RS} \cdot R_a \cdot \sqrt{T_{max}-T_{min}}$$
+
 where the $K_{RS}$ is the empirical coefficient fitted to $R_s/R_a$ versus $\sqrt{T_{max}-T_{min}}$ data. $K_{RS}$ = 0.19 for coastal area; $K_{RS}$ = 0.16 for inner land.
 
-
+### 
 
 ### Required inputs
 - Satellite remote sensing inputs

@@ -97,13 +97,17 @@ def calc_incoming_solar_radiation(ra, rs_obs=None, tmax=None, tmin=None, coastal
 
 
 ## Step 3: Albedo (a0) calculation based on Red and NIR bands
-def calc_albedo(red, nir, method='Teixeira_2015'):
+def calc_albedo(red, nir, method='R_NIR'):
     """
-    Calculate albedo based on red and nir reflectance
-    The reflectance value ranges between 0 and 1
-    method can only pick from 'Teixeira_2015'
+    Calculate albedo based on red and nir reflectance.
+    The reflectance value ranges between 0 and 1.
+    Teixeira, A. H. D. C., Padovani, C. R., Andrade, R. G., Leivas, J. F., Victoria, D. D. C., & Galdino, S. (2015). 
+    Use of MODIS images to quantify the radiation and energy balances in the Brazilian Pantanal. 
+    Remote Sensing, 7(11), 14597-14619. 
+    https://doi.org/10.3390/rs71114597
+    
     """
-    supported_methods = ['Teixeira_2015','Demo']
+    supported_methods = ['R_NIR','Demo']
     if method not in supported_methods:
         raise ValueError(
             f"Error: '{method}' is not supported。 "
@@ -111,7 +115,7 @@ def calc_albedo(red, nir, method='Teixeira_2015'):
         )
     red = np.asarray(red)
     nir = np.asarray(nir)
-    if method == 'Teixeira_2015':
+    if method == 'R_NIR':
         albedo = 0.08 + 0.41*red + 0.14*nir
     elif method == 'Demo': # Change this if a new method was found
         albedo = 0.07 + 0.40*red + 0.13*nir

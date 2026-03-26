@@ -55,6 +55,35 @@ The easiest way to get started is by exploring the provided Jupyter Notebook: `p
     </figure>
   </div>
 
+## Physical Principles and Govering Equations of SAFER
+### Extraterrestrial radiation ($R_a$, $MJ \cdot m^{-2} \cdot day$)
+A physical upper limit calculation, where the equation could be found in [Torres-Rua et al., (2011)](https://www.sciencedirect.com/science/article/pii/S0378377410003331). Two required inputs are:
+- Latitude (radians)
+- DOY (day of year)
+
+$$R_a=\frac{37.6 \cdot d_r \cdot [w_s \cdot sin(\phi_l)sin(\delta) + cos(\phi_l) \cdot sin(w_s)]}{\lambda}$$
+$$\delta = 0.4093 \cdot sin(\frac{2 \pi (284+DOY)}{365})$$
+$$d_r = 1 + 0.033 \cdot cos(\frac{2 \pi \cdot DOY}{365})$$
+$$w_s = cos(tan(\phi_l) \cdot tan(\delta))$$
+
+where:
+- $d_r$: Relative distance from the earth to the sun, dimensionless.
+- $DOY$: Day of the year.
+- $w_s$: Sunset hour angle, radians.
+- $\phi_l$: Latitude, radians.
+- $\delta$: Declination of the sun, radians. 
+- $\lambda$: Latent heat of vvaporization, $\lambda=2.54~MJ/kg$
+
+### Incoming solar radiation ($R_s$, $MJ \cdot m^{-2} \cdot day$)
+This can be either measured by sensors or estimated by the equation from [Hargreaves et al., (2003)](https://ascelibrary.org/doi/10.1061/%28ASCE%290733-9437%282003%29129%3A1%2853%29). Three required inputs are:
+- Extraterrestrial radiation ($MJ \cdot m^{-2} \cdot day$), estimated from above
+- The mean maximum air temperature ($\degree C$)
+- The mean minimum air temperature ($\degree C$)
+$$R_s=K_{RS} \cdot R_a \cdot \sqrt{T_{max}-T_{min}}$$
+where the $K_{RS}$ is the empirical coefficient fitted to $R_s/R_a$ versus $\sqrt{T_{max}-T_{min}}$ data. $K_{RS}$ = 0.19 for coastal area; $K_{RS}$ = 0.16 for inner land.
+
+
+
 ### Required inputs
 - Satellite remote sensing inputs
   - **Normalized Difference Vegetation Index (NDVI):** Calculated from Red ($\rho_{Red}$) and Near-Infrared ($\rho_{NIR}$) bands
@@ -69,21 +98,7 @@ The easiest way to get started is by exploring the provided Jupyter Notebook: `p
   - **Geospatial metadata:** Station latitude and elevation (for atmospheric pressure and psychrometric constants)
 
 ### Extraterrestrial radiation ($$)
-$$R_a=\frac{37.6 \cdot d_r \cdot [w_s \cdot sin(\phi_l)sin(\delta) + cos(\phi_l) \cdot sin(w_s)]}{\lambda}$$
 
-$$\delta = 0.4093 \cdot sin(\frac{2 \pi (284+DOY)}{365})$$
-
-$$d_r = 1 + 0.033 \cdot cos(\frac{2 \pi \cdot DOY}{365})$$
-
-$$w_s = cos(tan(\phi_l) \cdot tan(\delta))$$
-
-where:
-- $d_r$: relative distance from the earth to the sun
-- $DOY$: day of the year
-- $w_s$: sunset hour angle (rad)
-- $\phi_l$: latitude (rad)
-- $\delta$: declination of the sun (rad) 
-- $\lambda$: latent heat of vvaporization, $\lambda=2.54 MJ/kg$
 
 $$LST=({\frac{R_{s24}-\alpha_0 \cdot R_{s24} + \epsilon_A \cdot \sigma \cdot T_a^4 - R_n}{\epsilon_s \cdot \sigma}})^{0.25}$$
 - $T_a:$ average air temperature ($\degree C$)

@@ -177,7 +177,7 @@ def calc_r_net(rs_est, ra, albedo, tmax, tmin,
 
 
 # Step 6: Ground heat flux estimation/observation (G)
-def calc_flux_g(rn_est, albedo, g_obs=None, method='paras_2015'):
+def calc_flux_g(rn_est, albedo, method='paras_2015', g_obs=None):
     """
     Inputs:
     rn_est: either estimated or observed net radiation
@@ -205,14 +205,15 @@ def calc_flux_g(rn_est, albedo, g_obs=None, method='paras_2015'):
     if method == 'paras_2015':
         a_g = 3.98
         b_g = -25.47
+        g_est = (rn_est/0.0864 * a_g * np.exp(b_g * albedo)) * 0.0864
     elif method == 'paras_2019':
         a_g = 3.98
         b_g = -31.98
+        g_est = (rn_est/0.0864 * a_g * np.exp(b_g * albedo)) * 0.0864
     else:
         raise ValueError(
             f"Unknown method: {method}. Use 'paras_2015' or 'paras_2019'."
         )
-    g_est = (rn_est/0.0864 * a_g * np.exp(b_g * albedo)) * 0.0864
     
     return g_est
 

@@ -12,9 +12,19 @@ pip install "git+https://github.com/RuiGao9/pySAFER.git"
 ```
 
 ## Model Inputs
-- **Albedo ($\alpha_0$):** The ratio between reflected and incident sunlight, like the equation below. $\alpha_P$ is the albedo for the visible and infrared partition of the electromagnetic spectrum. $w_{band}$ represents different narrow-band reflectances. $w_{band}$ represents weights for each band.
-$$\alpha_P=\sum{w_{band} \cdot r_{band}}$$
-- 
+- **Albedo ($\alpha_0$):** The ratio between reflected and incident sunlight. A general method to get the $\alpha_0$ has two steps:
+  - **$\alpha_P$ calculation:** $\alpha_P$ is the albedo for the visible and infrared partition of the electromagnetic spectrum. $w_{band}$ represents different narrow-band reflectances. $w_{band}$ represents weights for each band. The weights for the different bands was computed as the ration of the amount of the incoming shortwave radiation from the sum in each band and the sum of incoming shortwave radiation from the sum in each band and the sum of incoming shortwave radiation for the bands at the top of the atmosphere (TOA).
+  $$\alpha_P=\sum{w_{band} \cdot r_{band}}$$
+  <div align="center">
+    <figure>
+      <img src="Figures/weights.png" alt="weights" width="35%" />
+      <figcaption style="color: grey; font-style: italic; font-size: 0.9em; margin-top: 10px;">
+            One case from the paper called agriwater: An R package for spatial modelling of energy balance and actual evapotranspiration using satellite images and agrometeorological data
+      </figcaption>
+    </figure>
+  </div>
+  - **$\alpha_0$:** the daily $\alpha_0$ is then obtained by:
+  $$\alpha_0=b\cdot \alpha_P+c$$
 
 ## Running the Model
 The easiest way to get started is by exploring the provided Jupyter Notebook: `pySAFER_Run.ipynb`. This notebook serves as a comprehensive template that demonstrates the end-to-end workflow:

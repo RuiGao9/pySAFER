@@ -21,7 +21,6 @@ $$\alpha_P=\sum{w_{band} \cdot r_{band}}$$
   <figure>
     <img src="Figures/weights.png" alt="weights" width="35%" />
       <p><i>One case from the paper called agriwater: An R package for spatial modelling of energy balance and actual evapotranspiration using satellite images and agrometeorological data</i></p>
-    
   </figure>
 </div>
 
@@ -48,9 +47,7 @@ The easiest way to get started is by exploring the provided Jupyter Notebook: `p
   <div align="center">
     <figure>
       <img src="Figures/energy_balance.png" alt="weights" width="35%" />
-      <figcaption style="color: grey; font-style: italic; font-size: 0.9em; margin-top: 10px;">
-            Energy balance model described by Silva, et al. (2019).
-      </figcaption>
+      <p><i>Energy balance model described by Silva, et al. (2019).</i></p>
     </figure>
   </div>
 

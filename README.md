@@ -12,6 +12,7 @@ pip install "git+https://github.com/RuiGao9/pySAFER.git"
 ```
 
 ## Model Inputs
+- **Albedo ($\alpha_0$):** The ratio between reflected and incident sunlight.
 
 ## Running the Model
 The easiest way to get started is by exploring the provided Jupyter Notebook: `pySAFER_Run.ipynb`. This notebook serves as a comprehensive template that demonstrates the end-to-end workflow:

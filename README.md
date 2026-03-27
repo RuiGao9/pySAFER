@@ -75,7 +75,7 @@ This can be either measured by sensors or estimated by the equation from [Hargre
 - Extraterrestrial radiation ($MJ \cdot m^{-2} \cdot day$), estimated from above
 - The mean maximum air temperature ($\degree C$)
 - The mean minimum air temperature ($\degree C$)
-- 
+  
 $$R_s=K_{RS} \cdot R_a \cdot \sqrt{T_{max}-T_{min}}$$
 
 where the $K_{RS}$ is the empirical coefficient fitted to $R_s/R_a$ versus $\sqrt{T_{max}-T_{min}}$ data. $K_{RS}$ = 0.19 for coastal area; $K_{RS}$ = 0.16 for inner land.
@@ -88,6 +88,15 @@ $$\alpha_0=0.08 + 0.41 \times \rho_{Red}+ 0.14 \times \rho_{NIR}$$
 ### Reflected shortwave radiation ($R_{rs}$, $MJ \cdot m^{-2} \cdot day$)
 
 $$R_{rs}=\alpha_0 \cdot R_s$$
+
+
+### Net radiation ($R_n$, $MJ \cdot m^{-2} \cdot day$)
+
+$$R_n=(1-\alpha_0) \cdot R_s - a_L \cdot \frac{R_s}{R_a}$$
+$$a_L=c\cdot \frac{T_{max}+T_{min}}{2}+d$$
+
+where 
+- $c=6.99, d=39.93$
 
 ### Required inputs
 - Satellite remote sensing inputs

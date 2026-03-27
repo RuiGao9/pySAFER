@@ -80,7 +80,11 @@ $$R_s=K_{RS} \cdot R_a \cdot \sqrt{T_{max}-T_{min}}$$
 
 where the $K_{RS}$ is the empirical coefficient fitted to $R_s/R_a$ versus $\sqrt{T_{max}-T_{min}}$ data. $K_{RS}$ = 0.19 for coastal area; $K_{RS}$ = 0.16 for inner land.
 
-### 
+### Albedo ($\alpha_0$)
+Albedo will be obtained based on remote sensing (spectral) image data. Methods vary, and one method based on the reflectand in red ($\rho_{Red}$) and near-infrared ($\rho_{NIR}$).
+
+$$\alpha_0=0.08 + 0.41 \times \rho_{Red}+ 0.14 \times \rho_{NIR}$$
+
 
 ### Required inputs
 - Satellite remote sensing inputs
@@ -94,8 +98,6 @@ where the $K_{RS}$ is the empirical coefficient fitted to $R_s/R_a$ versus $\sqr
   - **Regression coefficients ($a, b, c$):** Empirical values
   - **Day of year ($DOY$):** Used for the calculation of the inverse relative distance Earth-Sun and solar declination for radiation balance
   - **Geospatial metadata:** Station latitude and elevation (for atmospheric pressure and psychrometric constants)
-
-### Extraterrestrial radiation ($$)
 
 
 $$LST=({\frac{R_{s24}-\alpha_0 \cdot R_{s24} + \epsilon_A \cdot \sigma \cdot T_a^4 - R_n}{\epsilon_s \cdot \sigma}})^{0.25}$$

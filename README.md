@@ -86,6 +86,7 @@ Albedo will be obtained based on remote sensing (spectral) image data. Methods v
 $$\alpha_0=0.08 + 0.41 \times \rho_{Red}+ 0.14 \times \rho_{NIR}$$
 
 ### Reflected shortwave radiation ($R_{rs}$, $MJ \cdot m^{-2} \cdot day$)
+This term quantifies the portion of incoming solar energy that is reflected back to the atmosphere without being absorbed by the surface. It acts as a primary "filter" that determines the total energy available ($R_n$) for driving the hydrological cycle and crop transpiration.
 
 $$R_{rs}=\alpha_0 \cdot R_s$$
 
